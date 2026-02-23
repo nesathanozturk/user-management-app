@@ -69,14 +69,15 @@ const UserForm = ({ error, isPending, onSubmit }: UserFormProps) => {
         {...register("password")}
       />
 
-      <Button
-        className="w-full"
-        isLoading={isPending}
-        size="lg"
-        type="submit"
-      >
-        Create User
-      </Button>
+      <div className="flex justify-end">
+        <Button
+          isLoading={isPending}
+          size="md"
+          type="submit"
+        >
+          Create User
+        </Button>
+      </div>
     </form>
   );
 };

@@ -40,18 +40,19 @@ export default function UserDetailPage() {
 
   const { user } = data;
 
-  const fields = [
-    { label: "First Name", value: user.firstName },
-    { label: "Last Name", value: user.lastName },
-    { label: "Email", value: user.email },
-    { label: "Age", value: String(user.age) },
-    { label: "Role", value: user.role },
-    { label: "Created At", value: formatDate(user.createdAt) },
-    { label: "Updated At", value: formatDate(user.updatedAt) },
-  ];
+  const roleBadge =
+    user.role === "admin" ? (
+      <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-700 ring-1 ring-amber-600/20">
+        Admin
+      </span>
+    ) : (
+      <span className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-blue-600/20">
+        User
+      </span>
+    );
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div className="space-y-6">
       <div>
         <Link
           className="mb-4 inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
@@ -66,17 +67,37 @@ export default function UserDetailPage() {
         <p className="mt-1 text-sm text-gray-500">User details</p>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white p-6">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {fields.map((field) => (
-            <div key={field.label}>
-              <dt className="text-sm font-medium text-gray-500">
-                {field.label}
-              </dt>
-              <dd className="mt-1 text-base text-gray-900">{field.value}</dd>
-            </div>
-          ))}
-        </div>
+      <div className="rounded-xl border border-gray-200 bg-white">
+        <dl className="divide-y divide-gray-100">
+          <div className="grid grid-cols-3 px-6 py-4">
+            <dt className="text-sm text-gray-500">First Name</dt>
+            <dd className="col-span-2 text-sm text-gray-900">{user.firstName}</dd>
+          </div>
+          <div className="grid grid-cols-3 px-6 py-4">
+            <dt className="text-sm text-gray-500">Last Name</dt>
+            <dd className="col-span-2 text-sm text-gray-900">{user.lastName}</dd>
+          </div>
+          <div className="grid grid-cols-3 px-6 py-4">
+            <dt className="text-sm text-gray-500">Email</dt>
+            <dd className="col-span-2 text-sm text-gray-900">{user.email}</dd>
+          </div>
+          <div className="grid grid-cols-3 px-6 py-4">
+            <dt className="text-sm text-gray-500">Age</dt>
+            <dd className="col-span-2 text-sm text-gray-900">{user.age}</dd>
+          </div>
+          <div className="grid grid-cols-3 px-6 py-4">
+            <dt className="text-sm text-gray-500">Role</dt>
+            <dd className="col-span-2">{roleBadge}</dd>
+          </div>
+          <div className="grid grid-cols-3 px-6 py-4">
+            <dt className="text-sm text-gray-500">Created At</dt>
+            <dd className="col-span-2 text-sm text-gray-900">{formatDate(user.createdAt)}</dd>
+          </div>
+          <div className="grid grid-cols-3 px-6 py-4">
+            <dt className="text-sm text-gray-500">Updated At</dt>
+            <dd className="col-span-2 text-sm text-gray-900">{formatDate(user.updatedAt)}</dd>
+          </div>
+        </dl>
       </div>
     </div>
   );

@@ -5,23 +5,29 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import UserForm from "@/components/UserForm";
+import { useToast } from "@/components/ui/Toast";
 import { useCreateUser } from "@/hooks/useUsers";
 import type { CreateUserInput } from "@/lib/validations";
 
 export default function AddUserPage() {
   const router = useRouter();
+  const { toast } = useToast();
   const { error, isPending, mutate: createUser } = useCreateUser();
 
   const handleSubmit = (data: CreateUserInput) => {
     createUser(data, {
+      onError: (err) => {
+        toast(err.message || "Failed to create user");
+      },
       onSuccess: () => {
+        toast("User created successfully", "success");
         router.push("/dashboard");
       },
     });
   };
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div className="space-y-6">
       <div>
         <Link
           className="mb-4 inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"

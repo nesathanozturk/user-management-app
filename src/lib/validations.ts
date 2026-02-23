@@ -7,8 +7,8 @@ export const loginSchema = z.object({
 
 export const createUserSchema = z.object({
   age: z
-    .number()
-    .int()
+    .number({ error: "Please enter a valid age" })
+    .int("Age must be a whole number")
     .min(1, "Age must be at least 1")
     .max(150, "Age must be at most 150"),
   email: z.email("Please enter a valid email"),

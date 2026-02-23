@@ -6,10 +6,10 @@ export default function LoginPage() {
       <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold text-gray-900">
-            User Management System
+            User Management
           </h1>
           <p className="mt-2 text-sm text-gray-500">
-            Sign in to your account
+            Log in to your account
           </p>
         </div>
         <LoginForm />

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 
 import Button from "@/components/ui/Button";
+import { useToast } from "@/components/ui/Toast";
 import { cn } from "@/lib/utils";
 import type { BulkUploadError, BulkUploadResponse } from "@/types";
 
@@ -13,6 +14,7 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 const ExcelUpload = () => {
   const router = useRouter();
+  const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [dragActive, setDragActive] = useState(false);
@@ -117,6 +119,7 @@ const ExcelUpload = () => {
 
       if (!response.ok) {
         setServerMessage(data.message || "Upload failed");
+        toast(data.message || "Upload failed");
         if (data.errors) {
           setErrors(data.errors);
         }
@@ -125,11 +128,13 @@ const ExcelUpload = () => {
 
       setSuccess(true);
       setServerMessage(data.message || "Upload successful");
+      toast(data.message || "Users uploaded successfully", "success");
       setTimeout(() => {
         router.push("/dashboard");
       }, 2000);
     } catch {
       setServerMessage("An unexpected error occurred");
+      toast("An unexpected error occurred");
     } finally {
       setIsUploading(false);
     }

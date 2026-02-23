@@ -51,7 +51,7 @@ const LoginForm = () => {
         size="lg"
         type="submit"
       >
-        Sign In
+        Log In
       </Button>
     </form>
   );

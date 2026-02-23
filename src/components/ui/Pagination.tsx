@@ -37,7 +37,7 @@ const Pagination = ({ currentPage, onPageChange, totalPages }: PaginationProps) 
   return (
     <div className="flex items-center gap-1">
       <button
-        className="inline-flex items-center justify-center rounded-lg border border-gray-300 p-2 text-gray-500 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+        className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-gray-300 p-2 text-gray-500 transition-colors hover:border-gray-900 hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-gray-300 disabled:hover:text-gray-500"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
@@ -51,10 +51,10 @@ const Pagination = ({ currentPage, onPageChange, totalPages }: PaginationProps) 
         ) : (
           <button
             className={cn(
-              "inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm transition-colors",
+              "inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg text-sm transition-colors",
               page === currentPage
                 ? "bg-gray-900 font-medium text-white"
-                : "text-gray-600 hover:bg-gray-50"
+                : "border border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-900"
             )}
             key={page}
             onClick={() => onPageChange(page)}
@@ -64,7 +64,7 @@ const Pagination = ({ currentPage, onPageChange, totalPages }: PaginationProps) 
         )
       )}
       <button
-        className="inline-flex items-center justify-center rounded-lg border border-gray-300 p-2 text-gray-500 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+        className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-gray-300 p-2 text-gray-500 transition-colors hover:border-gray-900 hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-gray-300 disabled:hover:text-gray-500"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
       >

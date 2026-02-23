@@ -33,7 +33,7 @@ const Button = ({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center rounded-lg font-medium transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2",
+        "inline-flex items-center justify-center rounded-lg font-medium transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-1",
         VARIANT_CLASSES[variant],
         SIZE_CLASSES[size],
         (disabled || isLoading) && "cursor-not-allowed opacity-50",

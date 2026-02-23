@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { useToast } from "@/components/ui/Toast";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
@@ -17,12 +18,14 @@ const Sidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
 
+  const { toast } = useToast();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
     try {
       await fetch("/api/auth/logout", { method: "POST" });
+      toast("Logged out successfully", "success");
       router.push("/");
     } catch {
       setIsLoggingOut(false);
@@ -31,16 +34,13 @@ const Sidebar = () => {
 
   return (
     <aside className="flex h-screen w-64 shrink-0 flex-col border-r border-gray-200 bg-white">
-      <div className="flex h-16 items-center border-b border-gray-200 px-6">
-        <h1 className="text-lg font-bold text-gray-900">User Management</h1>
+      <div className="flex h-16 items-center border-b border-gray-200 px-5">
+        <span className="text-base font-semibold text-gray-900">User Management</span>
       </div>
 
-      <nav className="flex-1 space-y-1 px-3 py-4">
+      <nav className="flex-1 space-y-0.5 px-3 py-4">
         {NAV_ITEMS.map((item) => {
-          const isActive =
-            item.href === "/dashboard"
-              ? pathname === "/dashboard"
-              : pathname.startsWith(item.href);
+          const isActive = pathname === item.href;
 
           return (
             <Link
@@ -53,7 +53,7 @@ const Sidebar = () => {
               href={item.href}
               key={item.href}
             >
-              <item.icon className="h-5 w-5" />
+              <item.icon className="h-5 w-5" strokeWidth={isActive ? 2 : 1.5} />
               {item.label}
             </Link>
           );
