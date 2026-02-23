@@ -6,6 +6,18 @@ export const loginSchema = z.object({
 });
 
 export const createUserSchema = z.object({
+  age: z
+    .number()
+    .int()
+    .min(1, "Age must be at least 1")
+    .max(150, "Age must be at most 150"),
+  email: z.email("Please enter a valid email"),
+  firstName: z.string().min(2, "First name must be at least 2 characters"),
+  lastName: z.string().min(2, "Last name must be at least 2 characters"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+export const createUserApiSchema = z.object({
   age: z.coerce
     .number()
     .int()
