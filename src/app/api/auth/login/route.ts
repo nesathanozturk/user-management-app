@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 
     if (!user) {
       return NextResponse.json(
-        { message: "Invalid credentials", success: false },
+        { message: "Incorrect email or password", success: false },
         { status: 401 }
       );
     }
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
 
     if (!isPasswordValid) {
       return NextResponse.json(
-        { message: "Invalid credentials", success: false },
+        { message: "Incorrect email or password", success: false },
         { status: 401 }
       );
     }

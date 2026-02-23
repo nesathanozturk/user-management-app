@@ -55,8 +55,8 @@ const AgeFilter = ({ initialMaxAge = "", initialMinAge = "", onFilter }: AgeFilt
   };
 
   return (
-    <div className="flex items-end gap-2">
-      <div className="w-24">
+    <div className="flex flex-wrap items-end gap-2">
+      <div className="w-24 shrink-0">
         <label className="mb-1 block text-xs font-medium text-gray-900">Min Age</label>
         <Input
           className="bg-white px-2.5 py-1.5 text-xs"
@@ -68,7 +68,7 @@ const AgeFilter = ({ initialMaxAge = "", initialMinAge = "", onFilter }: AgeFilt
           value={minAge}
         />
       </div>
-      <div className="w-24">
+      <div className="w-24 shrink-0">
         <label className="mb-1 block text-xs font-medium text-gray-900">Max Age</label>
         <Input
           className="bg-white px-2.5 py-1.5 text-xs"

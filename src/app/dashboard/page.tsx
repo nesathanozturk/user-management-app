@@ -76,7 +76,7 @@ function DashboardContent() {
         <>
           <UserTable users={data.users} />
 
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-gray-500">
               Showing{" "}
               {Math.min((page - 1) * limit + 1, data.pagination.total)} to{" "}

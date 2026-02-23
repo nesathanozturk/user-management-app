@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
-import ErrorMessage from "@/components/ui/ErrorMessage";
 import Input from "@/components/ui/Input";
 import { useToast } from "@/components/ui/Toast";
 import { useLogin } from "@/hooks/useAuth";
@@ -13,7 +12,7 @@ import type { LoginInput } from "@/lib/validations";
 
 const LoginForm = () => {
   const { toast } = useToast();
-  const { mutate: login, error, isPending } = useLogin();
+  const { mutate: login, isPending } = useLogin();
 
   const {
     formState: { errors },
@@ -33,8 +32,6 @@ const LoginForm = () => {
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-      {error && <ErrorMessage message={error.message} />}
-
       <Input
         error={errors.email?.message}
         label="Email"

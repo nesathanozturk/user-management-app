@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, CheckCircle, FileSpreadsheet, Upload, X } from "lucide-react";
+import { FileSpreadsheet, Upload, X } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
@@ -23,7 +23,6 @@ const ExcelUpload = () => {
   const [errors, setErrors] = useState<BulkUploadError[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [serverMessage, setServerMessage] = useState("");
   const [success, setSuccess] = useState(false);
 
   const validateFile = useCallback((selectedFile: File): string | null => {
@@ -41,17 +40,16 @@ const ExcelUpload = () => {
     (selectedFile: File) => {
       const error = validateFile(selectedFile);
       if (error) {
-        setServerMessage(error);
+        toast(error);
         setErrors([]);
         setFile(null);
         return;
       }
       setFile(selectedFile);
-      setServerMessage("");
       setErrors([]);
       setSuccess(false);
     },
-    [validateFile]
+    [validateFile, toast]
   );
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -93,7 +91,6 @@ const ExcelUpload = () => {
   const handleRemoveFile = useCallback(() => {
     setFile(null);
     setErrors([]);
-    setServerMessage("");
     setSuccess(false);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -105,7 +102,6 @@ const ExcelUpload = () => {
 
     setIsUploading(true);
     setErrors([]);
-    setServerMessage("");
     setSuccess(false);
 
     try {
@@ -120,7 +116,6 @@ const ExcelUpload = () => {
       const data: BulkUploadResponse = await response.json();
 
       if (!response.ok) {
-        setServerMessage(data.message || "Upload failed");
         toast(data.message || "Upload failed");
         if (data.errors) {
           setErrors(data.errors);
@@ -129,14 +124,12 @@ const ExcelUpload = () => {
       }
 
       setSuccess(true);
-      setServerMessage(data.message || "Upload successful");
       toast(data.message || "Users uploaded successfully", "success");
       queryClient.invalidateQueries({ queryKey: ["users"] });
       setTimeout(() => {
         router.push("/dashboard");
       }, 2000);
     } catch {
-      setServerMessage("An unexpected error occurred");
       toast("An unexpected error occurred");
     } finally {
       setIsUploading(false);
@@ -207,20 +200,6 @@ const ExcelUpload = () => {
         >
           Upload and Import Users
         </Button>
-      )}
-
-      {success && (
-        <div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 p-4">
-          <CheckCircle className="h-5 w-5 shrink-0 text-green-600" />
-          <p className="text-sm text-green-800">{serverMessage}</p>
-        </div>
-      )}
-
-      {!success && serverMessage && (
-        <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-4">
-          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600" />
-          <p className="text-sm text-red-800">{serverMessage}</p>
-        </div>
       )}
 
       {errors.length > 0 && (

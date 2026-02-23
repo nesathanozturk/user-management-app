@@ -13,7 +13,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   description: "Manage your users with ease",
-  title: "User Management System",
+  title: "User Management App",
 };
 
 export default function RootLayout({
