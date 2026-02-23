@@ -1,6 +1,7 @@
 "use client";
 
 import { AlertCircle, CheckCircle, FileSpreadsheet, Upload, X } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 
@@ -13,6 +14,7 @@ const ALLOWED_EXTENSIONS = [".xlsx", ".xls"];
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 const ExcelUpload = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -129,6 +131,7 @@ const ExcelUpload = () => {
       setSuccess(true);
       setServerMessage(data.message || "Upload successful");
       toast(data.message || "Users uploaded successfully", "success");
+      queryClient.invalidateQueries({ queryKey: ["users"] });
       setTimeout(() => {
         router.push("/dashboard");
       }, 2000);

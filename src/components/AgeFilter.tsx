@@ -82,7 +82,7 @@ const AgeFilter = ({ initialMaxAge = "", initialMinAge = "", onFilter }: AgeFilt
       </div>
       <Button onClick={handleFilter} size="sm" variant="secondary">
         <SlidersHorizontal className="mr-1.5 h-3.5 w-3.5" />
-        Filters
+        Filter
       </Button>
       {(minAge || maxAge) && (
         <Button onClick={handleClear} size="sm" variant="outline">

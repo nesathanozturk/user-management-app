@@ -1,8 +1,7 @@
 "use client";
 
 import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
@@ -11,6 +10,7 @@ import { formatDate } from "@/lib/utils";
 
 export default function UserDetailPage() {
   const { userId } = useParams<{ userId: string }>();
+  const router = useRouter();
   const { data, error, isLoading } = useUser(userId);
 
   if (isLoading) {
@@ -24,13 +24,13 @@ export default function UserDetailPage() {
   if (error) {
     return (
       <div className="space-y-4">
-        <Link
+        <button
           className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
-          href="/dashboard"
+          onClick={() => router.back()}
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Users
-        </Link>
+        </button>
         <ErrorMessage message={error.message} />
       </div>
     );
@@ -54,13 +54,13 @@ export default function UserDetailPage() {
   return (
     <div className="space-y-6">
       <div>
-        <Link
+        <button
           className="mb-4 inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
-          href="/dashboard"
+          onClick={() => router.back()}
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Users
-        </Link>
+        </button>
         <h1 className="text-2xl font-bold text-gray-900">
           {user.firstName} {user.lastName}
         </h1>

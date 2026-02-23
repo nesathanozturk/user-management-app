@@ -14,7 +14,10 @@ export function useUsers(params: UserQueryParams) {
       if (params.maxAge) searchParams.set("maxAge", String(params.maxAge));
 
       const res = await fetch(`/api/users?${searchParams.toString()}`);
-      if (!res.ok) throw new Error("Failed to fetch users");
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.message || "Failed to fetch users");
+      }
       return res.json();
     },
     queryKey: ["users", params.page, params.limit, params.minAge, params.maxAge],
@@ -26,7 +29,10 @@ export function useUser(userId: string) {
     enabled: !!userId,
     queryFn: async (): Promise<{ user: User }> => {
       const res = await fetch(`/api/users/${userId}`);
-      if (!res.ok) throw new Error("Failed to fetch user");
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.message || "Failed to fetch user");
+      }
       return res.json();
     },
     queryKey: ["user", userId],

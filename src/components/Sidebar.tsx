@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutDashboard, LogOut, Upload, UserPlus } from "lucide-react";
+import { LayoutDashboard, LogOut, Upload, UserPlus, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -14,7 +14,11 @@ const NAV_ITEMS = [
   { href: "/dashboard/addMany", icon: Upload, label: "Bulk Upload" },
 ];
 
-const Sidebar = () => {
+interface SidebarProps {
+  onClose?: () => void;
+}
+
+const Sidebar = ({ onClose }: SidebarProps) => {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -34,13 +38,27 @@ const Sidebar = () => {
 
   return (
     <aside className="flex h-screen w-64 shrink-0 flex-col border-r border-gray-200 bg-white">
-      <div className="flex h-16 items-center border-b border-gray-200 px-5">
+      <div className="flex h-16 items-center justify-between border-b border-gray-200 px-5">
         <span className="text-base font-semibold text-gray-900">User Management</span>
+        {onClose && (
+          <button
+            className="rounded-lg p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 lg:hidden"
+            onClick={onClose}
+          >
+            <X className="h-5 w-5" />
+          </button>
+        )}
       </div>
 
       <nav className="flex-1 space-y-0.5 px-3 py-4">
         {NAV_ITEMS.map((item) => {
-          const isActive = pathname === item.href;
+          const isActive =
+            item.href === "/dashboard"
+              ? pathname === "/dashboard" ||
+                (pathname.startsWith("/dashboard/") &&
+                  pathname !== "/dashboard/add" &&
+                  pathname !== "/dashboard/addMany")
+              : pathname === item.href;
 
           return (
             <Link
@@ -52,6 +70,7 @@ const Sidebar = () => {
               )}
               href={item.href}
               key={item.href}
+              onClick={onClose}
             >
               <item.icon className="h-5 w-5" strokeWidth={isActive ? 2 : 1.5} />
               {item.label}
